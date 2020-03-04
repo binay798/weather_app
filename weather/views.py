@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import requests
 from .forms import NameForm
+from django.http import Http404,HttpResponse
 
 # Create your views here.
 def index(request):
@@ -10,14 +11,18 @@ def index(request):
     if request.method == 'POST':
         name = request.POST["name"]
         r = requests.get(url.format(name,api_key)).json()
-        return render(request,'weather/index.html',{
-            'name':name,
-            'desc':r['weather'][0]['description'],
-            'temp':r['main']['temp'],
-            'icon':r['weather'][0]['icon'],
-            'r':r,
-            'desc':r['weather'][0]['description']
-        })
+        try:
+
+            return render(request,'weather/index.html',{
+                'name':name,
+                'desc':r['weather'][0]['description'],
+                'temp':r['main']['temp'],
+                'icon':r['weather'][0]['icon'],
+                'r':r,
+                'desc':r['weather'][0]['description']
+            })
+        except:
+            return HttpResponse("<h1>Place not found.</h1>")
 
     
     else:
