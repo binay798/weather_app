@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   
+
+
+</head>
+<body>
+    <div class="container back">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 border p-3 mt-4 rounded-lg  " style="background-image:url({% static 'images/back1.jpg' %});background-repeat:no-repeat;background-size:cover;">
+                <h1 class="display-4 text-white">Weather Forcast</h1>
+
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="name" class="form-control">
+                    
+                    <button type='submit' class="btn btn-primary mt-2" style="float: right;">Submit</button>
+                </form>
+                
+                
+                {% if r %}
+                <h1 class="display-4 text-center text-light mt-4">{{temp}}<span>&#8451;</span></h1>
+                <p class="text-center text-light"><span><img  src="http://api.openweathermap.org/img/w/{{icon}}" width=30px alt="image" style="margin-left: 8em;"></span>{{name|upper}}</p>
+                
+                <p class="text-center text-light" style="margin-left: 8em;">{{desc|title}}</p>
+                {% endif %}
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+</body>
+</html>
